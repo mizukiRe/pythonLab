@@ -19,32 +19,46 @@ print('y / n' + yesNo)
 if yesNo in "y" or yesNo in "n":
     print ("おーけー")
 else:
-    print ("ng")
+    print ("ダメダメじゃん")
 
 card_number = {1,2,3,4,5,6,7,8,9,10,11,12,13}
 
-card_mark = {"ハート","ダイア","スペード","クローバー"}
+# for cMark in card_number:
+#     print(cMark)
+
+card_mark = {"ハート","ダイア","スペード","クローバー","スペアミント","レモンバーム"}
 
 #ここにナンバーとマークでトランプのセットを作る
 #機能拡張でトランプ追加したいから、頑張って追加できるように作る
 deck = []
 
-print(deck)
+# for aaa in card_mark:
+#     print(aaa)
 
-for cMark in card_mark:
-    # print(cNumber)
+# print(deck)
 
-    for cNumber in card_number:
+# for cMark in card_mark:
+#     # print(cNumber)
 
-        deck.append(str(cNumber) + ":::" + cMark)
+#     for cNumber in card_number:
+
+#         deck.append(str(cNumber) + ":::" + cMark)
 
 
 #ドローしたカードは配列から消す
 # del( index )を使って消せばOK
 
-#ドロー処理は配列の要素数を最大値とする乱数を生成して、インデックスのカードを取り出して、消去する
-# 山札枚数一定以下（ルール調べて）で山札を補充する
-print(deck)
+# 試しに消してみる
+# del deck[1]
+
+# # popを使えば、削除と値の保持を同時にできる
+# # 指定したインデックスの要素を削除して、要素を返します。
+# # 引数を指定しない場合、リストの末尾の要素を削除します。
+# print(deck.pop(3))
+
+# #ドロー処理は配列の要素数を最大値とする乱数を生成して、インデックスのカードを取り出して、消去する
+# # 山札枚数一定以下（ルール調べて）で山札を補充する
+# print(deck)
 
 
 
