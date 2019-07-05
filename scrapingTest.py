@@ -2,34 +2,38 @@ import requests
 from bs4 import BeautifulSoup
 import re
 
+# こんにちは python こんにちはpython 
 print("Hello world")
  
 # BeautifulSoupではURLは直接扱えないのでrequestsを使う（ほかにも選択肢があるよ）
-r = requests.get("https://news.yahoo.co.jp/")
+r = requests.get("https://mainichi.jp/")
  
 # 標準ライブラリのhtml.parserでHTMLパース
-soup = BeautifulSoup(r.content, "html.parser")
+try:
+    soup = BeautifulSoup(r.content, "lxml")
+
+except:
+    soup = BeautifulSoup(r.content, "html.parser")
+
+# **参考サイト
+# URL:http://kondou.com/BS4/
+# 公式ドキュメントの日本語訳なのでここを見ればすべてがわかる
+
+# **関数メモ
+# find_all はすべての要素を取得
+# find　は最初の要素を見つけた時点で終了
+# .stripped_strings を使えば、空白を除く事ができる
+# .parent を使えば、１つ上の親要素を取得できる
+# 属性は　.get("属性名") で取得する。
+# find_parents() で
 
 # ここで欲しい要素を抽出すれば良い
 
-# div class:newsFeed_item_title の要素をすべて取得して並べる
-# div 要素をすべて取ってからクラスでフィルターして、テキストで取ろう（提案）
-soup.find_all("div")
+get_text = soup.find_all(text = re.compile("カカオ"))
 
-for a in soup.find_all(class_="newsFeed_item_title"):
-    print(a.text)  
+print(get_text)
 
+for GT in get_text:
+    print(GT.find_parents(true))  
 
-# print(soup.find_all("a", text=re.compile("札幌")))
-
-# <div class="newsFeed_item_title">
-
-# print(soup.find_all(text="エンタメ"))
-
-# print(soup.select_one("div").get_text())
-
-# print(soup.select_one("newsFeed > ul > li:nth-child(1) > a > div.newsFeed_item_text > div.newsFeed_item_title"))
-
-# for a in soup.find_all('a'):
-    # print(a.get('href'))  
 
