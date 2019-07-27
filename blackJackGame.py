@@ -12,37 +12,40 @@
 print("Hello world")
 
 # input()でインプットを呼び出し
-yesNo = input()
-print('y / n' + yesNo)
+# yesNo = input()
+# print('y / n' + yesNo)
 
-# pythonのIF文は文字列の場合は==かinを使って比較する
-if yesNo in "y" or yesNo in "n":
-    print ("おーけー")
-else:
-    print ("ダメダメじゃん")
+# # pythonのIF文は文字列の場合は==かinを使って比較する
+# if yesNo in "y" or yesNo in "n":
+#     print ("おーけー")
+# else:
+#     print ("ダメダメじゃん")
 
-card_number = {1,2,3,4,5,6,7,8,9,10,11,12,13}
+class Cards:
+    CARD_NUMBER_LIST = {1,2,3,4,5,6,7,8,9,10,11,12,13}
 
-# for cMark in card_number:
-#     print(cMark)
+    CARD_MARK_LIST = {"ハート","ダイア","スペード","クローバー"}
 
-card_mark = {"ハート","ダイア","スペード","クローバー","スペアミント","レモンバーム"}
+    deck = []
+
+    def create_card_deck(self):
+        for cMark in self.CARD_MARK_LIST:
+
+            for cNumber in self.CARD_NUMBER_LIST:
+
+                self.deck.append(str(cNumber) + ":::" + cMark)
+
 
 #ここにナンバーとマークでトランプのセットを作る
 #機能拡張でトランプ追加したいから、頑張って追加できるように作る
-deck = []
 
-# for aaa in card_mark:
-#     print(aaa)
+cards = Cards
 
-# print(deck)
+cards.create_card_deck
 
-# for cMark in card_mark:
-#     # print(cNumber)
+print(cards.deck)
 
-#     for cNumber in card_number:
-
-#         deck.append(str(cNumber) + ":::" + cMark)
+print(len(cards.deck))
 
 
 #ドローしたカードは配列から消す
