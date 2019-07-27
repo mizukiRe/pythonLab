@@ -80,25 +80,44 @@ print ("This is out of for block")
 
 print("//-------ここまでリスト練習----------//")
 
-# クラスのドキュメントってどうやって書けば良いの？
 def HelloWorld():
-    """[summary]
+    """ハローワールドを返す関数
     """
 
     print("ハローワールド関数３")
 
 class Test:
+    """2種類のprint関数を持ったクラス
+
+    """
 
     def test_print(self):
-        print('This is test')
+        print("This is test")
 
-"""
-doc
+    def print_apple(self):
+        print("apple")
 
+class MyTestClass(Test):
+    """Testを継承したクラス
+    
+    Args:
+        Test (class):2種類のprint関数を持ったクラス
+        ↑の部分クラス継承した時に、サマリーから自動で取りたい
+    """
 
+    def print_apple(self):
+        print("同じ関数名を継承先に作った場合は後勝ち")
 
-"""
+    def print_banana(self):
+        print("ばななばふーん")
+
 HelloWorld()
 
 test = Test()      #インスタンス生成
 test.test_print()  #メソッド呼び出し
+
+mytest = MyTestClass()
+mytest.print_apple()
+mytest.print_banana()
+mytest.test_print() # 継承した関数を使う
+
