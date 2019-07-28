@@ -12,21 +12,27 @@
 print("Hello world")
 
 # input()でインプットを呼び出し
-# yesNo = input()
-# print('y / n' + yesNo)
 
-# # pythonのIF文は文字列の場合は==かinを使って比較する
-# if yesNo in "y" or yesNo in "n":
-#     print ("おーけー")
-# else:
-#     print ("ダメダメじゃん")
+class Player:
+    yesNo = input()
+    print('y / n' + yesNo)
+
+    # pythonのIF文は文字列の場合は==かinを使って比較する
+    if yesNo in "y" or yesNo in "n":
+        print ("おーけー")
+    else:
+        print ("ダメダメじゃん")
 
 class Cards:
+
     CARD_NUMBER_LIST = {1,2,3,4,5,6,7,8,9,10,11,12,13}
 
     CARD_MARK_LIST = {"ハート","ダイア","スペード","クローバー"}
 
     deck = []
+
+    def cardtest(self):
+        print("aaa")
 
     def create_card_deck(self):
         for cMark in self.CARD_MARK_LIST:
@@ -39,13 +45,17 @@ class Cards:
 #ここにナンバーとマークでトランプのセットを作る
 #機能拡張でトランプ追加したいから、頑張って追加できるように作る
 
-cards = Cards
+# トランプをインスタンス化
+cards = Cards()
 
-cards.create_card_deck
+# ゲームに使うトランプを1セット用意
+cards.create_card_deck()
 
 print(cards.deck)
 
 print(len(cards.deck))
+
+# ターンの進行
 
 
 #ドローしたカードは配列から消す
