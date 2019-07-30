@@ -1,3 +1,5 @@
+import random
+
 # プログラミング入門者からの卒業試験は『ブラックジャック』を開発すべし
 # https://qiita.com/hirossyi73/items/cf8648c31898216312e5
 # Pythonの練習としてこの課題をやってみる
@@ -25,19 +27,24 @@
 print("Hello world")
 
 # input()でインプットを呼び出し
+class GameStatus:
+
+    name = ""
+    hund = []
+    point = 0
 
 class Player:
 
-    def __init__(self): 
+    def __init__(self,player_name): 
         # インスタンス変数
-        self.hund = []
-        self.point = []
+        self.gamestatus = GameStatus()
+        self.name = player_name
 
     def yes_no_select(self):
         yesNo = input()
         print('y / n' + yesNo)
 
-        self.hund.append(yesNo)
+        self.gamestatus.hund.append(yesNo)
 
         # pythonのIF文は文字列の場合は==かinを使って比較する
         if yesNo in "y" or yesNo in "n":
@@ -48,19 +55,31 @@ class Player:
 class Dealer:
 
     def _init_(self):
-        self.hund = []
-        self.point = []
+        self.gamestatus = GameStatus()
 
 class Game:
 
     # コンストラクタでゲームのセットアップを行う
     # プレイヤー2枚ドロー、ディーラー2枚ドロー
+    def __init__(self): 
+        # インスタンス変数
+        player = Player("あなた")
+        dealer = Player("ディーラー")
+        cards = Cards()
 
-    def card_draw(self):
+        # 初回の山札を作成
+        cards.create_card_deck()
 
-        print()
+        # 初回ドロー
+        cards.drow_card_for_deck(2,player)
+
+        cards.drow_card_for_deck(2,dealer)
+
+        # print(player.hund)
 
 class Cards:
+    """トランプの管理を行う
+    """
 
     CARD_NUMBER_LIST = {1,2,3,4,5,6,7,8,9,10,11,12,13}
 
@@ -69,16 +88,39 @@ class Cards:
     # 山札
     deck = []
 
-    def cardtest(self):
-        print("aaa")
-
     def create_card_deck(self):
+        """カードナンバーとカードマークから山札を作成する
+        """
         for cMark in self.CARD_MARK_LIST:
 
             for cNumber in self.CARD_NUMBER_LIST:
 
                 self.deck.append(str(cNumber) + ":::" + cMark)
 
+    def drow_card_for_deck(self, number, Player):
+
+        print("ここからドロー処理")
+
+        print(len(self.deck))
+
+        random_number = random.randrange(len(self.deck))
+
+        print(list(range(len(self.deck))))
+        # [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+        print(random.randrange(len(self.deck)))
+        
+        draw_card = self.deck.pop(random_number)
+
+        print("引いたカード→" + draw_card)
+
+        Player.gamestatus.hund.append(draw_card)
+
+        print(Player.gamestatus.hund)
+        
+        print("ここまでドロー処理")
+
+        return random_number
 
 #ここにナンバーとマークでトランプのセットを作る
 #機能拡張でトランプ追加したいから、頑張って追加できるように作る
@@ -87,22 +129,16 @@ class Cards:
 cards = Cards()
 
 # ゲームに使うトランプを1セット用意
-cards.create_card_deck()
+# cards.create_card_deck()
 
 print(cards.deck)
 
 print(len(cards.deck))
 
 # ドロー処理は、デッキの最大数を引数にランダムで数字生成してデッキからPOPで取得する
+game = Game()
 
-payer1 = Player()
-payer2 = Player()
 
-payer1.yes_no_select()
-payer2.yes_no_select()
-
-print(payer1.hund)
-print(payer2.hund)
 
 # ターンの進行
 
