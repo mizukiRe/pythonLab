@@ -29,28 +29,16 @@ print("Hello world")
 # input()でインプットを呼び出し
 class GameStatus:
 
-    name = ""
-    hund = []
-    point = 0
+    def __init__(self): 
+        self.name = ""
+        self.hund = []
+        self.point = 0
 
 class Player:
 
     def __init__(self,player_name): 
         # インスタンス変数
         self.gamestatus = GameStatus()
-        self.name = player_name
-
-    def yes_no_select(self):
-        yesNo = input()
-        print('y / n' + yesNo)
-
-        self.gamestatus.hund.append(yesNo)
-
-        # pythonのIF文は文字列の場合は==かinを使って比較する
-        if yesNo in "y" or yesNo in "n":
-            print ("おーけー")
-        else:
-            print ("ダメダメじゃん")
 
 class Dealer:
 
@@ -72,10 +60,44 @@ class Game:
 
         # 初回ドロー
         cards.drow_card_for_deck(2,player)
+        cards.drow_card_for_deck(2,player)
 
         cards.drow_card_for_deck(2,dealer)
+        cards.drow_card_for_deck(2,dealer)
 
-        # print(player.hund)
+        print("プレイヤー手札" + str(player.gamestatus.hund) + "ポイント" + str(player.gamestatus.point))
+        print("ディーラー手札" + str(dealer.gamestatus.hund) + "ポイント" + str(dealer.gamestatus.point))
+
+    def turn_process(self):
+
+        print("現在の特典を表示")
+
+        # プレイヤーが1枚引く
+
+        # バースト判定
+
+        # ディーラーが17点以上になるまで引く
+
+        # バースト判定
+
+        # プレイヤーがコールするか引くかを聞く
+
+        # コールなら結果を発表
+
+
+    def yes_no_select(self):
+        yesNo = input()
+        print('y / n' + yesNo)
+
+        # self.gamestatus.hund.append(yesNo)
+
+        # pythonのIF文は文字列の場合は==かinを使って比較する
+        if yesNo in "y" or yesNo in "n":
+            print ("おーけー")
+        else:
+            print ("ダメダメじゃん")
+
+
 
 class Cards:
     """トランプの管理を行う
@@ -95,48 +117,49 @@ class Cards:
 
             for cNumber in self.CARD_NUMBER_LIST:
 
-                self.deck.append(str(cNumber) + ":::" + cMark)
+                self.deck.append(str(cNumber) + "," + cMark)
 
     def drow_card_for_deck(self, number, Player):
 
-        print("ここからドロー処理")
+        for i in range(1,number):
 
-        print(len(self.deck))
+            print("ここからドロー処理")
 
-        random_number = random.randrange(len(self.deck))
+            print(len(self.deck))
 
-        print(list(range(len(self.deck))))
-        # [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+            random_number = random.randrange(len(self.deck))
 
-        print(random.randrange(len(self.deck)))
-        
-        draw_card = self.deck.pop(random_number)
+            print(list(range(len(self.deck))))
 
-        print("引いたカード→" + draw_card)
+            print(random.randrange(len(self.deck)))
+            
+            draw_card = self.deck.pop(random_number)
 
-        Player.gamestatus.hund.append(draw_card)
+            print("引いたカード→" + draw_card)
 
-        print(Player.gamestatus.hund)
-        
-        print("ここまでドロー処理")
+            Player.gamestatus.hund.append(draw_card)
 
-        return random_number
+            print(Player.gamestatus.hund)
+            
+            print("ここまでドロー処理")
+
+            card_point = draw_card.split((","))
+
+            Player.gamestatus.point += int(card_point[0])
+
+            return random_number
+
+    def point_calc(self):
+
+        print("ここに例外ポイントを計算する")
 
 #ここにナンバーとマークでトランプのセットを作る
 #機能拡張でトランプ追加したいから、頑張って追加できるように作る
 
-# トランプをインスタンス化
-cards = Cards()
-
-# ゲームに使うトランプを1セット用意
-# cards.create_card_deck()
-
-print(cards.deck)
-
-print(len(cards.deck))
-
 # ドロー処理は、デッキの最大数を引数にランダムで数字生成してデッキからPOPで取得する
 game = Game()
+
+# print(game.Player.gamestatus.hand)
 
 
 
