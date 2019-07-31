@@ -70,8 +70,8 @@ class Game:
 
     def turn_process(self):
 
-        print("現在の特典を表示")
-
+        print("現在の得点を表示")
+ 
         # プレイヤーが1枚引く
 
         # バースト判定
@@ -84,6 +84,17 @@ class Game:
 
         # コールなら結果を発表
 
+    def add_mul(self,x, y):
+        return (x + y, x * y)
+
+    def berst_check(self,point):
+        BURST_POINT = 21
+
+        if(BURST_POINT < point):
+            print("【★バースト★】")
+            return False
+
+        return True
 
     def yes_no_select(self):
         yesNo = input()
