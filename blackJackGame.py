@@ -27,33 +27,25 @@ import random
 print("Hello world")
 
 # input()でインプットを呼び出し
-class GameStatus:
-
-    def __init__(self): 
-        self.name = ""
-        self.hund = []
-        self.point = 0
 
 class Player:
 
     def __init__(self,player_name): 
         # インスタンス変数
-        self.gamestatus = GameStatus()
+        self.name = ""
+        self.hund = []
+        self.point = 0
 
 class Dealer:
 
     def _init_(self):
-        self.gamestatus = GameStatus()
+        self.name = ""
+        self.hund = []
+        self.point = 0
 
-class Game:
+class GameControler:
 
-    # コンストラクタでゲームのセットアップを行う
-    # プレイヤー2枚ドロー、ディーラー2枚ドロー
-    def __init__(self): 
-        # インスタンス変数
-        player = Player("あなた")
-        dealer = Player("ディーラー")
-        cards = Cards()
+    def __init__(self,player,dealer,cards): 
 
         # 初回の山札を作成
         cards.create_card_deck()
@@ -65,25 +57,20 @@ class Game:
         cards.drow_card_for_deck(2,dealer)
         cards.drow_card_for_deck(2,dealer)
 
-        print("プレイヤー手札" + str(player.gamestatus.hund) + "ポイント" + str(player.gamestatus.point))
-        print("ディーラー手札" + str(dealer.gamestatus.hund) + "ポイント" + str(dealer.gamestatus.point))
+        print("プレイヤー手札" + str(player.hund) + "ポイント" + str(player.point))
+        print("ディーラー手札" + str(dealer.hund) + "ポイント" + str(dealer.point))
 
-    def turn_process(self):
+    def burst_check(self,user):
 
-        print("現在の特典を表示")
+        BERST_POINT = 21
 
-        # プレイヤーが1枚引く
+        if(user.point > BERST_POINT):
 
-        # バースト判定
+            print("ゲームオーバー")
 
-        # ディーラーが17点以上になるまで引く
+        else: 
 
-        # バースト判定
-
-        # プレイヤーがコールするか引くかを聞く
-
-        # コールなら結果を発表
-
+            print("セーフ")
 
     def yes_no_select(self):
         yesNo = input()
@@ -97,6 +84,26 @@ class Game:
         else:
             print ("ダメダメじゃん")
 
+    def turn_process(self,player,dealer,cards):
+
+        print("現在の得点を表示")
+
+        # プレイヤーが1枚引く
+        cards.drow_card_for_deck(1,player)
+
+        # バースト判定
+        self.burst_check(player)
+
+        # ディーラーが17点以上になるまで引く
+
+        # バースト判定
+
+        # プレイヤーがコールするか引くかを聞く
+
+        # コールなら結果を発表
+
+    def game_over(self,player):
+        pass
 
 
 class Cards:
@@ -137,15 +144,15 @@ class Cards:
 
             print("引いたカード→" + draw_card)
 
-            Player.gamestatus.hund.append(draw_card)
+            Player.hund.append(draw_card)
 
-            print(Player.gamestatus.hund)
+            print(Player.hund)
             
             print("ここまでドロー処理")
 
             card_point = draw_card.split((","))
 
-            Player.gamestatus.point += int(card_point[0])
+            Player.point += int(card_point[0])
 
             return random_number
 
@@ -153,15 +160,19 @@ class Cards:
 
         print("ここに例外ポイントを計算する")
 
-#ここにナンバーとマークでトランプのセットを作る
-#機能拡張でトランプ追加したいから、頑張って追加できるように作る
 
-# ドロー処理は、デッキの最大数を引数にランダムで数字生成してデッキからPOPで取得する
-game = Game()
+# プレイヤーとディーラーを作成
+player = Player("あなた")
+dealer = Player("ディーラー")
+# トランプを用意
+cards = Cards()
+# 山札を作成
+cards.create_card_deck()
 
-# print(game.Player.gamestatus.hand)
+# ゲームをセットアップ
+gc = GameControler(player,dealer,cards)
 
-
+gc.turn_process(player,dealer,cards)
 
 # ターンの進行
 
