@@ -79,10 +79,15 @@ class GameControler:
         # self.gamestatus.hund.append(yesNo)
 
         # pythonのIF文は文字列の場合は==かinを使って比較する
-        if yesNo in "y" or yesNo in "n":
-            print ("おーけー")
-        else:
-            print ("ダメダメじゃん")
+        if yesNo in "y":
+            print ("y")
+            return True
+
+        elif yesNo in "n":
+            print ("n")
+            return False
+
+        return False
 
     def turn_process(self,player,dealer,cards):
 
@@ -95,12 +100,22 @@ class GameControler:
         self.burst_check(player)
 
         # ディーラーが17点以上になるまで引く
+        if(dealer.point < 17):
+
+            cards.drow_card_for_deck(1,dealer)
 
         # バースト判定
+        self.burst_check(dealer)
 
         # プレイヤーがコールするか引くかを聞く
+        if(self.yes_no_select()):
 
-        # コールなら結果を発表
+            print("")
+            # コールなら結果を発表
+
+        return False
+
+        
 
     def game_over(self,player):
         pass
