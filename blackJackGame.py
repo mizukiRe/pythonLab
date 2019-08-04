@@ -91,10 +91,8 @@ class GameControler:
 
     def turn_process(self,player,dealer,cards):
 
-        print("現在の得点を表示")
-
         # プレイヤーが1枚引く
-        cards.drow_card_for_deck(1,player)
+        cards.drow_card_for_deck(2,player)
 
         # バースト判定
         self.burst_check(player)
@@ -102,16 +100,22 @@ class GameControler:
         # ディーラーが17点以上になるまで引く
         if(dealer.point < 17):
 
-            cards.drow_card_for_deck(1,dealer)
+            cards.drow_card_for_deck(2,dealer)
 
         # バースト判定
         self.burst_check(dealer)
 
+        print("現在の得点を表示")
+        print("プレイヤー手札" + str(player.hund) + "ポイント" + str(player.point))
+        print("ディーラー手札" + str(dealer.hund) + "ポイント" + str(dealer.point))
+
         # プレイヤーがコールするか引くかを聞く
+        print("もう1枚ドローしますか？")
         if(self.yes_no_select()):
 
             print("")
             # コールなら結果を発表
+            return True
 
         return False
 
@@ -187,25 +191,13 @@ cards.create_card_deck()
 # ゲームをセットアップ
 gc = GameControler(player,dealer,cards)
 
-gc.turn_process(player,dealer,cards)
+# ターンをゲームが終わるまで繰り返す
+while gc.turn_process(player,dealer,cards):
+    pass
 
-# ターンの進行
+print("ここで結果発表")
+# 結果発表の処理をまとめる
 
-
-#ドローしたカードは配列から消す
-# del( index )を使って消せばOK
-
-# 試しに消してみる
-# del deck[1]
-
-# # popを使えば、削除と値の保持を同時にできる
-# # 指定したインデックスの要素を削除して、要素を返します。
-# # 引数を指定しない場合、リストの末尾の要素を削除します。
-# print(deck.pop(3))
-
-# #ドロー処理は配列の要素数を最大値とする乱数を生成して、インデックスのカードを取り出して、消去する
-# # 山札枚数一定以下（ルール調べて）で山札を補充する
-# print(deck)
 
 
 
