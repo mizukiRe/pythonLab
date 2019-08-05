@@ -42,6 +42,7 @@ class Dealer:
         self.name = ""
         self.hund = []
         self.point = 0
+        self.result = ""
 
 class GameControler:
 
@@ -63,10 +64,13 @@ class GameControler:
     def burst_check(self,user):
 
         BERST_POINT = 21
+        GAME_OVER_POINT = 99
 
         if(user.point > BERST_POINT):
 
             print("ゲームオーバー")
+
+            user.point = GAME_OVER_POINT
 
         else: 
 
@@ -197,6 +201,18 @@ while gc.turn_process(player,dealer,cards):
 
 print("ここで結果発表")
 # 結果発表の処理をまとめる
+print("あなたのポイント：" + str(player.point) + "ディーラーのポイント" + str(dealer.point))
+
+# クラス作って処理を分ける？コントローラーにずらす？
+if(player.point == 99 or dealer.point == 99):
+    print("バーストしたので負け")
+
+if(player.point > dealer.point):
+    print("プレイヤーの勝ち")
+else:
+    print("ディーラーの勝ち")
+
+
 
 
 
