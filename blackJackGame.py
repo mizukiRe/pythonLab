@@ -35,6 +35,7 @@ class Player:
         self.name = ""
         self.hund = []
         self.point = 0
+        self.win_flg = False
 
 class Dealer:
 
@@ -45,6 +46,8 @@ class Dealer:
         self.result = ""
 
 class GameControler:
+
+    resurt_text = ""
 
     def __init__(self,player,dealer,cards): 
 
@@ -72,9 +75,20 @@ class GameControler:
 
             user.point = GAME_OVER_POINT
 
-        else: 
+            self.resurt_text = "あなたの負け"
+            # バースト = true
+            return True
 
-            print("セーフ")
+        return False
+
+    def resurt_process(self,user,dealer):
+
+        pass
+
+
+
+
+
 
     def yes_no_select(self):
         yesNo = input()
@@ -99,7 +113,10 @@ class GameControler:
         cards.drow_card_for_deck(2,player)
 
         # バースト判定
-        self.burst_check(player)
+        if(self.burst_check(player)):
+
+            print("結果を記入")
+
 
         # ディーラーが17点以上になるまで引く
         if(dealer.point < 17):
