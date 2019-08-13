@@ -30,17 +30,17 @@ print("Hello world")
 
 class Player:
 
-    def __init__(self,player_name): 
+    def __init__(self,name): 
         # インスタンス変数
-        self.name = ""
+        self.name = name
         self.hund = []
         self.point = 0
         self.win_flg = False
 
 class Dealer:
 
-    def _init_(self):
-        self.name = ""
+    def _init_(self,name):
+        self.name = name
         self.hund = []
         self.point = 0
         self.result = ""
@@ -55,11 +55,11 @@ class GameControler:
         cards.create_card_deck()
 
         # 初回ドロー
-        cards.drow_card_for_deck(2,player)
-        cards.drow_card_for_deck(2,player)
+        cards.drow_card_for_deck(player,False)
+        cards.drow_card_for_deck(player,False)
 
-        cards.drow_card_for_deck(2,dealer)
-        cards.drow_card_for_deck(2,dealer)
+        cards.drow_card_for_deck(dealer,False)
+        cards.drow_card_for_deck(dealer,True)
 
         print("プレイヤー手札" + str(player.hund) + "ポイント" + str(player.point))
         print("ディーラー手札" + str(dealer.hund) + "ポイント" + str(dealer.point))
@@ -70,8 +70,6 @@ class GameControler:
         GAME_OVER_POINT = 99
 
         if(user.point > BERST_POINT):
-
-            print("ゲームオーバー")
 
             user.point = GAME_OVER_POINT
 
@@ -84,11 +82,6 @@ class GameControler:
     def resurt_process(self,user,dealer):
 
         pass
-
-
-
-
-
 
     def yes_no_select(self):
         yesNo = input()
@@ -109,42 +102,40 @@ class GameControler:
 
     def turn_process(self,player,dealer,cards):
 
-        # プレイヤーが1枚引く
-        cards.drow_card_for_deck(2,player)
+        # プレイヤーがコールするか引くかを聞く
+        # @TASK プレイヤーのドロー処理を終わってからディーラーのドロー処理を行う
+        print("もう1枚ドローしますか？")
+        if(self.yes_no_select()):
 
-        # バースト判定
-        if(self.burst_check(player)):
+            # プレイヤーが1枚引く
+            cards.drow_card_for_deck(player,False)
 
-            print("結果を記入")
+            # バースト判定
+            if(self.burst_check(player)):
 
+                print("結果を記入")
+                return False
 
+        # プレイヤーが引き終わった後にディーラーがドローする
         # ディーラーが17点以上になるまで引く
-        if(dealer.point < 17):
+        while 17 <= dealer.point:
 
-            cards.drow_card_for_deck(2,dealer)
+            print("ディーラーはポイントが17になるまでドローする")
+            cards.drow_card_for_deck(dealer,False)
 
         # バースト判定
-        self.burst_check(dealer)
+        if(self.burst_check(dealer)):
+
+            return False
 
         print("現在の得点を表示")
         print("プレイヤー手札" + str(player.hund) + "ポイント" + str(player.point))
         print("ディーラー手札" + str(dealer.hund) + "ポイント" + str(dealer.point))
 
-        # プレイヤーがコールするか引くかを聞く
-        print("もう1枚ドローしますか？")
-        if(self.yes_no_select()):
-
-            print("")
-            # コールなら結果を発表
-            return True
-
-        return False
-
-        
+        return True
 
     def game_over(self,player):
         pass
-
 
 class Cards:
     """トランプの管理を行う
@@ -166,48 +157,43 @@ class Cards:
 
                 self.deck.append(str(cNumber) + "," + cMark)
 
-    def drow_card_for_deck(self, number, Player):
+    def drow_card_for_deck(self, Player, hidden_flg):
 
-        for i in range(1,number):
+        # デッキの最大値までのランダムな数値を生成
+        random_number = random.randrange(len(self.deck))
+        
+        # デッキから生成した数値のカードをドロー
+        draw_card = self.deck.pop(random_number)
 
-            print("ここからドロー処理")
+        if (hidden_flg):
 
-            print(len(self.deck))
+            print(Player.name + "が引いたカードは不明です")
 
-            random_number = random.randrange(len(self.deck))
+        else:
 
-            print(list(range(len(self.deck))))
+            print(Player.name + "が引いたカード：" + draw_card)
 
-            print(random.randrange(len(self.deck)))
-            
-            draw_card = self.deck.pop(random_number)
+        Player.hund.append(draw_card)
 
-            print("引いたカード→" + draw_card)
+        print("テスト中手札" + str(Player.hund))
 
-            Player.hund.append(draw_card)
+        card_point = draw_card.split((","))
 
-            print(Player.hund)
-            
-            print("ここまでドロー処理")
+        Player.point += int(card_point[0])
 
-            card_point = draw_card.split((","))
-
-            Player.point += int(card_point[0])
-
-            return random_number
+        return random_number
 
     def point_calc(self):
 
         print("ここに例外ポイントを計算する")
 
+print("- ブラックジャックを開始します -")
 
 # プレイヤーとディーラーを作成
 player = Player("あなた")
 dealer = Player("ディーラー")
 # トランプを用意
 cards = Cards()
-# 山札を作成
-cards.create_card_deck()
 
 # ゲームをセットアップ
 gc = GameControler(player,dealer,cards)
@@ -224,17 +210,7 @@ print("あなたのポイント：" + str(player.point) + "ディーラーのポ
 if(player.point == 99 or dealer.point == 99):
     print("バーストしたので負け")
 
-if(player.point > dealer.point):
+if(player.point > dealer.point or dealer.point == 99):
     print("プレイヤーの勝ち")
 else:
     print("ディーラーの勝ち")
-
-
-
-
-
-
-
-
-
-
