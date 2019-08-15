@@ -85,7 +85,7 @@ class GameControler:
 
     def yes_no_select(self):
         yesNo = input()
-        print('y / n' + yesNo)
+        # print('y / n' + yesNo)
 
         # self.gamestatus.hund.append(yesNo)
 
@@ -115,24 +115,28 @@ class GameControler:
 
                 print("結果を記入")
                 return False
+            
+            return True
+
+        else:
 
         # プレイヤーが引き終わった後にディーラーがドローする
         # ディーラーが17点以上になるまで引く
-        while 17 <= dealer.point:
+            while 17 >= dealer.point:
 
-            print("ディーラーはポイントが17になるまでドローする")
-            cards.drow_card_for_deck(dealer,False)
+                print("ディーラーはポイントが17になるまでドローする")
+                cards.drow_card_for_deck(dealer,False)
 
-        # バースト判定
-        if(self.burst_check(dealer)):
+            # バースト判定
+            if(self.burst_check(dealer)):
 
-            return False
+                return False
 
         print("現在の得点を表示")
         print("プレイヤー手札" + str(player.hund) + "ポイント" + str(player.point))
         print("ディーラー手札" + str(dealer.hund) + "ポイント" + str(dealer.point))
 
-        return True
+        return False
 
     def game_over(self,player):
         pass
@@ -212,10 +216,15 @@ print("ここで結果発表")
 print("あなたのポイント：" + str(player.point) + "ディーラーのポイント" + str(dealer.point))
 
 # クラス作って処理を分ける？コントローラーにずらす？
-if(player.point == 99 or dealer.point == 99):
-    print("バーストしたので負け")
+if(player.point == 99):
+    print("プレイヤーがバーストしたのでディーラーの勝ち")
 
-if(player.point > dealer.point or dealer.point == 99):
+elif(dealer.point == 99):
+    print("ディーラーがバーストしたのでプレイヤーの勝ち")
+
+elif(player.point > dealer.point or dealer.point == 99):
     print("プレイヤーの勝ち")
 else:
     print("ディーラーの勝ち")
+
+
