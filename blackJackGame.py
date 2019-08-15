@@ -157,6 +157,15 @@ class Cards:
 
                 self.deck.append(str(cNumber) + "," + cMark)
 
+    
+    def point_calc(self, num):
+
+        if(num >= 11):
+
+            return 10
+
+        return num
+
     def drow_card_for_deck(self, Player, hidden_flg):
 
         # デッキの最大値までのランダムな数値を生成
@@ -179,13 +188,9 @@ class Cards:
 
         card_point = draw_card.split((","))
 
-        Player.point += int(card_point[0])
+        Player.point += self.point_calc(int(card_point[0]))
 
         return random_number
-
-    def point_calc(self):
-
-        print("ここに例外ポイントを計算する")
 
 print("- ブラックジャックを開始します -")
 
