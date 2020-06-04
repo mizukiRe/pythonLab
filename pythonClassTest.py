@@ -1,6 +1,8 @@
 # pythonのクラスと関数は先に宣言してからじゃないと呼び出せない
 # ついでにIFとリストの実験をする
 
+#test
+
 # docstringはグーグルスタイルをずっと使う
 # VsCodeのプラグイン「autoDocstring」をインストールして設定→autoDocstringで検索してGoogleスタイルに変える
 
